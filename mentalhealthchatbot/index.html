@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mental Health Chatbot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
+
+  <!-- Toggle Sidebar Icon -->
+<button id="toggleSidebar" class="absolute top-4 left-4 z-50 text-2xl text-emerald-800 focus:outline-none">
+    <i class="fas fa-bars"></i>
+  </button>
+  
+  <!-- Sidebar History -->
+  <aside id="sidebar" class="fixed top-0 left-0 w-64 bg-white border-r p-4 h-screen shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-40 overflow-y-auto">
+    <h2 class="text-xl font-semibold mt-8 mb-4 text-emerald-700 bg-emerald-200 rounded-lg w-40 text-center">Chat History</h2>
+    <ul id="history-list" class="space-y-2 text-sm text-gray-700 bg-blue-200 rounded-lg w-50 p-2"></ul>
+    <button onclick="clearHistory()" class="mt-4 w-full bg-red-100 hover:bg-red-200 text-red-600 font-semibold py-2 px-4 rounded-lg">
+        🗑️ Delete History
+      </button>
+      
+  </aside>
+  
+  <header class="mx-auto text-center mt-4 mb-2 p-2 bg-emerald-100 rounded-lg max-w-3xl">
+    <h1 class="text-4xl font-bold text-emerald-800 mb-4">Mental Health Chatbot</h1>
+    <p class="text-lg text-emerald-700 underline underline-offset-4">Your Personal Mental Health Guide</p>      
+  </header>
+    <!-- Main Chat Section -->
+    <div class="flex-1 p-6 m-2">
+      <div class="flex justify-between items-start mb-6">
+        <!-- Left images -->
+        <div class="flex flex-col gap-4 w-[14%]">
+          <img src="1.jpg" class="w-full rounded-lg shadow-lg" />
+          <img src="2.jpg" class="w-full rounded-lg shadow-lg" />
+        </div>
+
+        <!-- Chat Section -->
+        <div class="bg-white rounded-2xl shadow-lg p-4 flex-1 mx-4">
+          <div id="chat-container" class="h-96 overflow-y-auto mb-4 space-y-4 px-2 py-2 bg-white rounded-lg shadow-inner"></div>
+          <div class="flex gap-4">
+            <input
+              type="text"
+              id="user-input"
+              class="flex-1 p-3 border border-emerald-300 rounded-full shadow-inner focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              placeholder="Ask me anything..."
+              onkeydown="handleKeyPress(event)"
+            />
+            <button onclick="startSpeech()" class="bg-blue-400 text-white px-4 rounded-full hover:bg-blue-500">🎙</button>
+            <button onclick="sendMessage()" class="bg-emerald-600 text-white px-6 py-3 rounded-full shadow hover:bg-emerald-700">
+              Send
+            </button>
+          </div>
+        </div>
+
+        <!-- Right images -->
+        <div class="flex flex-col gap-4 w-[14%]">
+          <img src="3.jpg" class="w-full rounded-lg shadow-lg" />
+          <img src="4.jpg" class="w-full rounded-lg shadow-lg" />
+        </div>
+      </div>
+
+      <!-- Quick Buttons -->
+      <div class="mx-auto max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <button onclick="quickStart('5-min session')" class="btn">🕔 5-Min Session</button>
+        <button onclick="quickStart('calm me')" class="btn">🧘 Calm me</button>
+        <button onclick="quickStart('breathing exercise')" class="btn">🌬️ Breathing</button>
+        <button onclick="quickStart('sleep meditation')" class="btn">🌙 Sleep Aid</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-5xl mx-auto p-12 m-4">
+    <div class="grid md:grid-cols-3 gap-8 text-center">
+      
+      <!-- AI Powered -->
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="w-20 h-20 flex items-center justify-center rounded-full bg-yellow-200">
+          <!-- <img src="panda-icon.png" alt="AI Panda" class="w-12"> -->
+        </div>
+        <h3 class="text-xl font-semibold mt-4">AI powered</h3>
+        <p class="text-gray-600 mt-2">
+          Auto-detect your mental state <br>
+          Get immediate <span class="font-bold">guidance.</span> <br>
+          <span class="font-bold">Talk with</span> AI Chatbot
+        </p>
+      </div>
+  
+      <!-- Effortless -->
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="200">
+        <div class="w-20 h-20 flex items-center justify-center rounded-full bg-green-200">
+          <!-- <img src="panda-icon.png" alt="Effortless Panda" class="w-12"> -->
+        </div>
+        <h3 class="text-xl font-semibold mt-4">Effortless</h3>
+        <p class="text-gray-600 mt-2">
+          3-second check-in <br>
+          Typing & Voice assisstance<br>
+          Intuitive UI
+        </p>
+      </div>
+  
+      <!-- Radically Private -->
+      <div class="flex flex-col items-center" data-aos="fade-up" data-aos-delay="300">
+        <div class="w-20 h-20 flex items-center justify-center rounded-full bg-blue-200">
+          <!-- <img src="panda-icon.png" alt="Private Panda" class="w-12"> -->
+        </div>
+        <h3 class="text-xl font-semibold mt-4">Radically private</h3>
+        <p class="text-gray-600 mt-2">
+          No registration <br>
+          No personal data <br>
+          No ads, only AI therapy
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="faq-container p-2 max-w-4xl">
+    <h2 class="text-2xl bg-emerald-200 rounded-lg w-20 text-center">FAQ</h2>
+    <div class="faq-item">
+      <button class="faq-question">
+        HOW DOES AN AI THERAPIST APP WORK IN MENTAL HEALTH CARE? <span class="faq-icon">▼</span>
+      </button>
+      <div class="faq-answer">An AI therapist app uses artificial intelligence to understand and support you in mental health care while ensuring security and protecting your health information. It fosters human connection by allowing you to talk to it anytime, remembering past conversations to make interactions more personal. Using machines and chatbots, it pays attention to your voice or video, tracks patterns in how you type or move, and even considers how sleep and weather affect you. It responds in real time, provides guidance, and tracks progress—all while feeling like a natural conversation.</div>
+    </div>
+  
+    <div class="faq-item">
+      <button class="faq-question">
+        CAN AN AI CHATBOT REPLACE A PSYCHOLOGIST? <span class="faq-icon">▼</span>
+      </button>
+      <div class="faq-answer">No, AI cannot replace psychologists or other human therapists. An AI therapist app is not a medical professional. However, it offers instant support—whether you're between psychotherapists or don't have access to a therapist. Chatbot advice uses principles from Cognitive Behavioral Therapy (CBT) and Dialectical Behavior Therapy (DBT) to provide evidence-based suggestions and practical tools for patients to manage emotions and stress.</div>
+    </div>
+  
+    <div class="faq-item">
+      <button class="faq-question">
+        CAN AI CHAT BOTS DIAGNOSE MENTAL HEALTH CONDITIONS? <span class="faq-icon">▼</span>
+      </button>
+      <div class="faq-answer">No, AI is not intended to provide formal diagnoses, medical advice, or replace traditional therapy or clinical evaluations. Instead, it analyzes trends and helps you track your emotions, spot patterns, and manage stress by offering mental advice. If you are experiencing a mental health crisis, struggling with thoughts of suicide, or in need of a diagnosis, seek help from the mental health professionals. AI chatbots aligns with guidelines from organizations like the American Psychological Association but should not be used as a substitute for professional care.</div>
+    </div>
+  
+    <div class="faq-item">
+      <button class="faq-question">
+        CAN CHATBOT PERSONALIZE ITS THERAPY ADVICE? <span class="faq-icon">▼</span>
+      </button>
+      <div class="faq-answer">Yes! this chatbot remembers your conversations and learns from how you interact with it. Its responses and suggestions are tailored to fit your needs. </div>
+    </div>
+  
+    <div class="faq-item">
+      <button class="faq-question">
+        IF YOU ARE ALREADY SEEING A LICENSED THERAPIST, CAN THIS AI CHATBOT HELP YOU? <span class="faq-icon">▼</span>
+      </button>
+      <div class="faq-answer">Yes! An AI therapist application is a great tool between therapy sessions. It reinforces what you're working on, supporting your treatment by providing encouragement and motivation when you need it most. With 24/7 support, you can practice coping strategies, track your experiences, and make your therapy even more effective. It can also assist individuals with autism by offering structured guidance and personalized support.</div>
+    </div>
+  
+    <div class="faq-item">
+      <button class="faq-question">
+        WHAT MENTAL HEALTH ISSUES CAN AI HELP WITH? <span class="faq-icon">▼</span>
+      </button>
+      <div class="faq-answer">AI chat bot helps with stress, anxiety, motivation, sleep, focus, negative self-talk, emotional regulation, relationships and self-confidence.</div>
+    </div>
+  </div>
+  <div class="text-md text-center p-16 m-4">AI Therapist is not a licensed psychologist or psychiatrist and should not be considered a substitute for professional mental health care. It is intended for educational and self-improvement purposes only. If you are experiencing a mental health crisis or need professional support, please seek help from a qualified healthcare provider.</div>
+  
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+</body>
+</html>
