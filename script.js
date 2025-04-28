@@ -142,7 +142,7 @@ recognition.onerror = function() {
     const synth = window.speechSynthesis;
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'en-US';
-    // synth.speak(utter); // Uncomment if you want voice output
+    synth.speak(utter); // Uncomment if you want voice output
   }
   renderHistory();
 
